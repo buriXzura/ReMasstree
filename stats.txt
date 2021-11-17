@@ -1,0 +1,90 @@
+10, 100, ..., 1M keys
+
+Without rebalancing:
+	
+	random keys- 
+		0.500000 0.200000
+		0.610000 0.260000
+		0.584000 0.344000
+		0.705700 0.478500
+		0.887330 0.653110
+		1.213558 1.092493
+	
+	incremental keys-
+		0.500000 0.300000
+		0.410000 0.210000
+		0.464000 0.269000
+		0.529500 0.365100
+		0.648910 0.454900
+		0.777952 0.535940
+
+	decremental keys-
+		0.500000 0.300000
+		0.420000 0.220000
+		0.461000 0.294000
+		0.521900 0.360200
+		0.621220 0.446600
+		0.764595 0.530867
+
+With rebalancing:
+
+	random keys-
+		0.600000 0.300000
+		0.730000 0.250000
+		0.714000 0.343000
+		0.841200 0.474900
+		1.029660 0.643070
+		1.357858 1.030844
+
+	incremental keys-
+		0.500000 0.300000
+		0.430000 0.210000
+		0.460000 0.266000
+		0.474600 0.326200
+		0.535320 0.392180
+		0.618279 0.461681
+
+	decremental keys-
+		0.400000 0.300000
+		0.440000 0.230000
+		0.400000 0.272000
+		0.444200 0.325700
+		0.512360 0.389860
+		0.595725 0.463881
+
+10M Keys:
+	DRAM Random Rebalance - 1.671445 1.274997
+	
+	PMEM Random Rebalance - 3.159280 2.199073
+
+
+Tree stats:-
+
+	Without Rebalancing:
+
+		Incremental-
+			number of keys: 40M
+			height: 9
+			node count: 5714281
+			space efficiency: 52.9167%
+
+		Random-
+			number of keys: 40M
+			height: 7
+			node count: 4160193
+			space efficiency: 70.3496%
+
+	With Rebalancing:
+
+		Incremental-
+			number of keys: 40M
+			height: 7
+			node count: 2844448
+			space efficiency: 99.9999%
+
+		Random-
+			number of keys: 40M
+			height: 7
+			node count: 3509309
+			space efficiency: 82.2384%
+

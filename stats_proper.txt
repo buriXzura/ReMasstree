@@ -1,0 +1,45 @@
+1st decimal is time taken in us per insert
+2nd decimal is time take in us per lookup
+
+100M Keys
+Incremental:
+	With 	0.658632 0.566291
+	W/O	0.830895 0.669599
+
+Random:
+	With	3.673976 3.035132
+	W/O	3.324304 3.242151
+
+
+1B Keys
+Incremental:
+	With	
+	W/O	0.890307 0.744272
+ 
+Random:
+	With	4.803754 4.060823
+	W/O	4.450717 4.324926
+
+
+
+1st is number of insertions per second
+2nd is number of lookups per second
+
+100 M keys
+Incremental:
+	With 	1.52M 1.766M
+	W/O	1.2M 1.49M
+
+Random:
+	With	0.272M 0.33M
+	W/O	0.3M 0.31M
+
+
+1B Keys
+Incremental:
+	With	
+	W/O	1.123M 1.344M
+ 
+Random:
+	With	0.208M	0.246M
+	W/O	0.225M	0.231M
