@@ -976,6 +976,7 @@ namespace masstree
         VersionNumber *cv1, *cv2;
         key_indexed_position ip;
         bool comp;
+        bool kilo=false;
 
         from_root:
             p=root_;
@@ -1147,8 +1148,8 @@ namespace masstree
                 {
                     inner->version.trySMOLock();
                     new_root();
-                    inner->version.releaseBothLocks();
                     inner = reinterpret_cast<inner_node *>(inner->child0);
+                    inner->parent->version.releaseBothLocks();
                     goto inner_insert;
                 } else 
                 {
@@ -1162,12 +1163,13 @@ namespace masstree
                     
                     key=to_insert.key;
                     value=to_insert.link_or_value;
-
+                    p = inner;
                     inner = inner->parent;
                     goto inner_insert;
                 }
             } else 
             {
+                
                 inner->insert(key,value);
                 cv1->releaseSMOLock();
                 cv2->releaseSMOLock();
@@ -1251,6 +1253,16 @@ namespace masstree
     double btree::efficiency()
     {
         return space;
+    }
+
+    void btree::print_tree()
+    {
+        inner_node *inner = reinterpret_cast<inner_node *>(root_);
+        std::cout<<inner->size()<<std::endl;
+        std::cout<<inner->version.smoLock()<<inner->version.insertLock()<<std::endl;
+        inner = reinterpret_cast<inner_node *>(inner->child0);
+        std::cout<<inner->size()<<std::endl;
+        std::cout<<inner->version.smoLock()<<inner->version.insertLock()<<std::endl;
     }
 
 }

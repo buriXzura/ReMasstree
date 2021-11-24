@@ -28,11 +28,14 @@ static uint64_t lehmer64() {
 
 
 u_int64_t *keys;
+void **values;
+
+
 
 int main(int argc, char **argv)
 {
     keys = new u_int64_t[(int)1e9+3];
-
+    values = (void **) malloc(((int)1e9+3)*sizeof(void *));
 
     masstree::btree *tree = new masstree::btree;
     u_int64_t key=14;
@@ -53,7 +56,7 @@ int main(int argc, char **argv)
         key+=10;
         inserts+=tree->insert(key,malloc(4));
         keys[i]=key;
-        cout<<"insert: "<<i<<endl;
+        //cout<<"insert: "<<i<<endl;
     }
 
     int a=0;
@@ -69,6 +72,8 @@ int main(int argc, char **argv)
 
     cout<<a<<"\n";
     //cout<<inserts<<"\n";
+
+    //tree->print_tree();
 
     return 0;
 }

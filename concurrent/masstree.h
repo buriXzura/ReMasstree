@@ -531,6 +531,7 @@ class btree
         u_int64_t tot_lookups();
         u_int64_t tot_inserts();
         u_int64_t tot_rebalances();
+        void print_tree();
 
     private:
         void new_root();
