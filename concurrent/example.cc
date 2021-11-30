@@ -26,23 +26,43 @@ static uint64_t lehmer64() {
   return g_lehmer64_state >> 64;
 }
 
+#define NUM_THR 2
 
 u_int64_t *keys;
 void **values;
+int num_tests;
+masstree::btree *tree;
 
-
+void *run(void* arg) {
+    int num = *(int *)arg;
+    int inserts=0, gets=0;
+    //cout<<num<<"\n";
+    int temp = num_tests/NUM_THR;
+    int st = temp*num;
+    int ed = st+temp;
+    //return NULL;
+    for(int i=st; i<ed; i++) {
+        inserts+=tree->insert(keys[i],values[i]);
+    }
+    for(int i=st; i<ed; i++) {
+        if(tree->get(keys[i])==values[i])
+            gets++;
+    }
+    cout<<"inserts: "<<inserts<<", gets: "<<gets<<endl;
+    return NULL;
+}
 
 int main(int argc, char **argv)
 {
     keys = new u_int64_t[(int)1e9+3];
     values = (void **) malloc(((int)1e9+3)*sizeof(void *));
 
-    masstree::btree *tree = new masstree::btree;
+    tree = new masstree::btree;
     u_int64_t key=14;
     void *val,*ans;
 
     init_seed();
-    int num_tests=1000;
+    num_tests=1000;
     if(argc>1)
         num_tests = atoi(argv[1]);
     int success=0;
@@ -54,25 +74,21 @@ int main(int argc, char **argv)
     {
         //key=lehmer64();
         key+=10;
-        inserts+=tree->insert(key,malloc(4));
         keys[i]=key;
+        values[i]=malloc(4);
         //cout<<"insert: "<<i<<endl;
     }
 
-    int a=0;
-    for(int i=0; i<num_tests; i++)
-    {
-        key=keys[i];
-        ans=tree->get(key);
-        if(ans) {
-            a++;
-            //cout<<i<<":"<<key<<"\n";
-        }
+    pthread_t thr[NUM_THR];
+    int tid[NUM_THR];
+
+    for(int i=0; i<NUM_THR; i++) {
+        tid[i]=i;
+        pthread_create(&thr[i], NULL, run, (void*)&tid[i]);
     }
-
-    cout<<a<<"\n";
     //cout<<inserts<<"\n";
-
+    for(int i=0; i<NUM_THR; i++)
+        pthread_join(thr[i], NULL);
     //tree->print_tree();
 
     return 0;

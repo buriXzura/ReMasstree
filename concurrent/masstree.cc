@@ -851,6 +851,7 @@ namespace masstree
                         }
                     }
                 }
+                p=inner;
                 V1=V2;
                 goto from_inner;
             }
@@ -917,6 +918,7 @@ namespace masstree
                         }
                     }
                 }
+                p=leaf;
                 V1=V2;
                 goto from_leaf;
             }
@@ -1043,6 +1045,7 @@ namespace masstree
                         }
                     }
                 }
+                p=inner;
                 V1=V2;
                 goto find;
             }
