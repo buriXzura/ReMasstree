@@ -411,7 +411,7 @@ namespace masstree
                     break;
                 temp_l->version.releaseInsertLock();
             }
-            if( (left->parent!=parent) || (left->full()) ) {
+            if( (left->parent!=parent) || (left->full()) || (left->version.smoLock()) ) {
                 left->version.releaseInsertLock();
                 goto right_sibling;
             }
@@ -507,7 +507,7 @@ namespace masstree
                     break;
                 temp_l->version.releaseInsertLock();
             }
-            if( (right->parent!=parent) || (right->full()) ) {
+            if( (right->parent!=parent) || (right->full()) || (right->version.smoLock()) ) {
                 right->version.releaseInsertLock();
                 goto end;
             }
@@ -593,7 +593,7 @@ namespace masstree
                     break;
                 temp_i->version.releaseInsertLock();
             }
-            if( (left->parent!=parent) || (left->full()) ) {
+            if( (left->parent!=parent) || (left->full()) || (left->version.smoLock()) ) {
                 left->version.releaseInsertLock();
                 goto right_sibling;
             }
@@ -710,7 +710,7 @@ namespace masstree
                     break;
                 temp_i->version.releaseInsertLock();
             }
-            if( (right->parent!=parent) || (right->full()) ) {
+            if( (right->parent!=parent) || (right->full()) || (right->version.smoLock()) ) {
                 right->version.releaseInsertLock();
                 goto end;
             }
@@ -978,7 +978,6 @@ namespace masstree
         VersionNumber *cv1, *cv2;
         key_indexed_position ip;
         bool comp;
-        bool kilo=false;
 
         from_root:
             p=root_;
